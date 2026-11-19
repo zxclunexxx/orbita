@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#070811">
+  <meta name="description" content="Твоя маленькая бесконечность. Исследуй космос, пройди через гиперпрыжок и создай собственную планетную систему.">
+  <title>ОРБИТА — твоя маленькая бесконечность</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23070811'/%3E%3Ccircle cx='32' cy='32' r='13' fill='%23cbc2ff'/%3E%3Cellipse cx='32' cy='32' rx='27' ry='10' transform='rotate(-32 32 32)' fill='none' stroke='%23cbc2ff' stroke-width='3'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <canvas id="cosmos" aria-label="Анимированная космическая сцена. Перетаскивай, чтобы изменить ракурс."></canvas>
+  <div class="shade" aria-hidden="true"></div><div class="vignette" aria-hidden="true"></div>
+  <svg class="sprite" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs>
+    <symbol id="i-orbit" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4" fill="currentColor" stroke="none"/><ellipse cx="12" cy="12" rx="11" ry="4.2" transform="rotate(-35 12 12)"/></symbol>
+    <symbol id="i-sound" viewBox="0 0 24 24"><path d="M11 5 6 9H3v6h3l5 4zM15 8a6 6 0 0 1 0 8M18 5a10 10 0 0 1 0 14"/></symbol>
+    <symbol id="i-mute" viewBox="0 0 24 24"><path d="M11 5 6 9H3v6h3l5 4zM16 9l5 6m0-6-5 6"/></symbol>
+    <symbol id="i-pause" viewBox="0 0 24 24"><path d="M8 5v14M16 5v14"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><path d="m8 5 11 7-11 7z"/></symbol>
+    <symbol id="i-expand" viewBox="0 0 24 24"><path d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M4 12h16m-6-6 6 6-6 6"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-camera" viewBox="0 0 24 24"><path d="M3 7h5l2-3h4l2 3h5v13H3z"/><circle cx="12" cy="13" r="4"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></symbol>
+  </defs></svg>
+  <div class="app">
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="ОРБИТА, к началу"><svg><use href="#i-orbit"/></svg><span>ОРБИТА<small>ТВОЯ МАЛЕНЬКАЯ БЕСКОНЕЧНОСТЬ</small></span></a>
+      <div class="live"><span class="live-dot"></span>СИГНАЛ УСТОЙЧИВ<span class="divider"></span><span id="mission-clock">00:00:00</span></div>
+      <div class="tools">
+        <button class="icon-button" id="sound" title="Включить звук · M" aria-label="Включить звук" aria-pressed="false"><svg><use href="#i-mute"/></svg></button>
+        <button class="icon-button" id="pause" title="Пауза · P" aria-label="Приостановить движение" aria-pressed="false"><svg><use href="#i-pause"/></svg></button>
+        <button class="icon-button" id="capture" title="Сохранить открытку" aria-label="Сохранить космическую открытку"><svg><use href="#i-camera"/></svg></button>
+        <button class="icon-button fullscreen" id="fullscreen" title="На весь экран" aria-label="Открыть на весь экран"><svg><use href="#i-expand"/></svg></button>
+      </div>
+    </header>
+    <main>
+      <section class="intro" aria-labelledby="scene-title">
+        <p class="eyebrow"><span id="scene-number">01</span> / ЛИЧНАЯ ОБСЕРВАТОРИЯ</p>
+        <h1 id="scene-title">На краю<br><span>бесконечности.</span></h1>
+        <p class="scene-description" id="scene-description">Здесь заканчивается привычный мир.<br>И начинается твоя вселенная.</p>
+        <div class="actions"><button class="primary" id="warp">Совершить гиперпрыжок<svg><use href="#i-arrow"/></svg></button><button class="secondary" id="create"><svg><use href="#i-plus"/></svg>Создать планету</button></div>
+        <div class="flight-note"><span class="tiny-star">✧</span><span id="flight-note">Потяни за звёзды — измени ракурс</span><button id="world-list" hidden>Каталог миров ↗</button></div>
+      </section>
+      <div class="object-label" aria-hidden="true"><div class="crosshair"></div><span id="object-label">SINGULARITY — 001<small id="object-subtitle">ЗА ГРАНИЦЕЙ ИЗВЕСТНОГО</small></span></div>
+      <aside class="telemetry"><span class="eyebrow">ТЕЧЕНИЕ ВРЕМЕНИ</span><div class="speed-value"><span id="speed-value">1.0</span><span>×</span></div><label class="sr-only" for="speed">Скорость времени</label><input id="speed" type="range" min="0.1" max="3" step="0.1" value="1"><div class="range-labels"><span>МЕДЛЕННЕЕ</span><span>БЫСТРЕЕ</span></div></aside>
+      <div class="travel-overlay" aria-hidden="true"><span>ПРОКЛАДЫВАЕМ ПУТЬ</span><strong>Сквозь бесконечность</strong><div class="travel-line"></div></div>
+    </main>
+    <footer>
+      <div class="destination-heading"><span>ВЫБЕРИ СВОЮ НЕИЗВЕСТНОСТЬ</span><button id="help">Как здесь всё устроено <span>?</span></button></div>
+      <nav class="destinations" aria-label="Космические локации">
+        <button class="destination active" data-scene="horizon" aria-pressed="true"><span class="scene-art hole-art" aria-hidden="true"></span><span class="destination-copy"><small>01 / СИНГУЛЯРНОСТЬ</small><strong>Горизонт событий</strong></span><span class="destination-arrow">↗</span></button>
+        <button class="destination" data-scene="nebula" aria-pressed="false"><span class="scene-art nebula-art" aria-hidden="true"></span><span class="destination-copy"><small>02 / ЗВЁЗДНАЯ КОЛЫБЕЛЬ</small><strong>Шёпот туманности</strong></span><span class="destination-arrow">↗</span></button>
+        <button class="destination" data-scene="system" aria-pressed="false"><span class="scene-art planet-art" aria-hidden="true"></span><span class="destination-copy"><small>03 / НОВЫЕ МИРЫ</small><strong>Твоя звёздная система</strong></span><span class="destination-arrow">↗</span></button>
+      </nav>
+      <div class="bottom-line"><span><span class="status-point"></span>КОСМОС БЛИЖЕ, ЧЕМ КАЖЕТСЯ</span><span id="discovered">ИССЛЕДОВАНО 01 / 03</span><span class="fiction">Художественная модель вселенной</span></div>
+    </footer>
+  </div>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <dialog id="planet-dialog" class="modal planet-modal" aria-labelledby="planet-heading">
+    <button class="icon-button close-modal" data-close aria-label="Закрыть конструктор"><svg><use href="#i-close"/></svg></button>
+    <p class="eyebrow">МАСТЕРСКАЯ МИРОВ</p><h2 id="planet-heading">У каждой планеты<br>есть начало.</h2><p class="modal-sub">У этой — ты.</p>
+    <div class="planet-preview" aria-hidden="true"><div class="preview-orbit"></div><div id="preview-planet"></div><div id="preview-rings"></div><span>ПЕРВЫЙ ВЗГЛЯД НА НОВЫЙ МИР</span></div>
+    <form id="planet-form"><label for="planet-name">Название планеты</label><input id="planet-name" name="name" maxlength="28" placeholder="Например, Аврора" required autocomplete="off">
+      <div class="form-row"><fieldset><legend>Палитра</legend><div class="swatches"><label><input type="radio" name="color" value="#a998ed" checked aria-label="Лавандовая"><span style="--swatch:#a998ed"></span></label><label><input type="radio" name="color" value="#66cbbb" aria-label="Бирюзовая"><span style="--swatch:#66cbbb"></span></label><label><input type="radio" name="color" value="#e2a270" aria-label="Янтарная"><span style="--swatch:#e2a270"></span></label><label><input type="radio" name="color" value="#81a8ec" aria-label="Голубая"><span style="--swatch:#81a8ec"></span></label><label><input type="radio" name="color" value="#e495b5" aria-label="Розовая"><span style="--swatch:#e495b5"></span></label></div></fieldset><label class="ring-toggle"><input type="checkbox" id="planet-rings" checked><span class="switch"></span>Кольца</label></div>
+      <label class="size-label" for="planet-size">Размер <output id="size-output">1.0 ×</output></label><input type="range" id="planet-size" min="0.5" max="2" step="0.1" value="1">
+      <button type="submit" class="primary wide">Подарить вселенной новый мир<svg><use href="#i-plus"/></svg></button><p class="form-note" id="planet-limit">Планеты сохраняются в этом браузере.</p>
+    </form>
+  </dialog>
+  <dialog id="help-dialog" class="modal help-modal" aria-labelledby="help-heading"><button class="icon-button close-modal" data-close aria-label="Закрыть инструкцию"><svg><use href="#i-close"/></svg></button><p class="eyebrow">НЕБОЛЬШОЙ БОРТОВОЙ СПРАВОЧНИК</p><h2 id="help-heading">Можешь просто<br>потеряться здесь.</h2><p class="modal-sub">Или взять управление на себя.</p><div class="help-list"><p><span>Перетаскивай сцену</span><span>Меняй ракурс</span></p><p><span>Нажимай на планеты</span><span>Узнавай их имена</span></p><p><span>Гиперпрыжок</span><kbd>H</kbd></p><p><span>Три локации</span><span><kbd>1</kbd> <kbd>2</kbd> <kbd>3</kbd></span></p><p><span>Пауза / звук</span><span><kbd>P</kbd> <kbd>M</kbd></span></p></div><p class="help-foot">Звук создаётся прямо здесь. Надень наушники, включи его и дай себе пару минут.<br><br>Это художественный космос: масштабы и движение придуманы ради впечатления.</p><button class="secondary wide" id="reduce-motion" aria-pressed="false">Уменьшить движение</button></dialog>
+  <dialog id="world-dialog" class="modal" aria-labelledby="world-heading"><button class="icon-button close-modal" data-close aria-label="Закрыть каталог"><svg><use href="#i-close"/></svg></button><p class="eyebrow">АТЛАС ЛИЧНОЙ ВСЕЛЕННОЙ</p><h2 id="world-heading">Миры твоей системы</h2><div id="world-content" class="world-content"></div></dialog>
+  <script src="cosmos.js"></script><script src="audio.js"></script><script src="app.js"></script>
+</body>
+</html>
+

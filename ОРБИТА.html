@@ -1,0 +1,715 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#070811">
+  <meta name="description" content="Твоя маленькая бесконечность. Исследуй космос, пройди через гиперпрыжок и создай собственную планетную систему.">
+  <title>ОРБИТА — твоя маленькая бесконечность</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23070811'/%3E%3Ccircle cx='32' cy='32' r='13' fill='%23cbc2ff'/%3E%3Cellipse cx='32' cy='32' rx='27' ry='10' transform='rotate(-32 32 32)' fill='none' stroke='%23cbc2ff' stroke-width='3'/%3E%3C/svg%3E">
+  <style>:root{color-scheme:dark;--bg:#070811;--text:#f0edf7;--muted:#9995ab;--accent:#c7baff;--line:rgba(222,216,255,.16);font-family:Inter,"Segoe UI",Arial,sans-serif;font-synthesis:none}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);overflow-x:hidden}button,a,input{-webkit-tap-highlight-color:transparent}button,input{font:inherit}button,a{touch-action:manipulation}button{color:inherit;cursor:pointer}button:disabled{cursor:wait;opacity:.65}button{border:0}button:focus-visible,a:focus-visible,input:focus-visible{outline:2px solid #e5dfff;outline-offset:5px}button{transition:background .2s,border-color .2s,transform .2s,color .2s}button:hover{color:white}svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}button svg{pointer-events:none}.sprite{display:none}#cosmos{position:fixed;inset:0;width:100%;height:100%;touch-action:none;cursor:grab}#cosmos:active{cursor:grabbing}.shade,.vignette{position:fixed;inset:0;pointer-events:none}.shade{background:linear-gradient(90deg,rgba(7,8,17,.78),rgba(7,8,17,.35) 32%,transparent 61%)}.vignette{background:linear-gradient(0deg,rgba(7,8,17,.97),transparent 37%,transparent 80%,rgba(7,8,17,.45))}.app{position:relative;min-height:100svh;display:flex;flex-direction:column;padding:0 4.5%;pointer-events:none}.app button,.app a,.app input{pointer-events:auto}.topbar{height:110px;display:flex;align-items:center;justify-content:space-between;gap:25px;border-bottom:1px solid var(--line)}.brand{display:flex;align-items:center;gap:13px;color:var(--text);text-decoration:none;font-size:22px;font-weight:650;letter-spacing:6px}.brand svg{width:36px;height:36px;color:var(--accent)}.brand small{display:block;font-size:8px;letter-spacing:2.3px;margin-top:7px;color:#aeabc0;font-weight:450}.live{display:flex;gap:11px;align-items:center;font-size:9px;letter-spacing:1.4px;color:#b2afbe;font-variant-numeric:tabular-nums}.live-dot,.status-point{display:inline-block;width:5px;height:5px;background:#b3d6c7;border-radius:50%;box-shadow:0 0 10px #91c5b070}.divider{height:13px;width:1px;background:var(--line);margin:0 7px}.tools{display:flex;gap:8px}.icon-button{display:grid;place-items:center;background:#10111b88;border:1px solid var(--line);border-radius:50%;height:40px;width:40px;color:#d3cede}.icon-button:hover{background:#37304788;border-color:#a99ac4}.icon-button[aria-pressed=true]{background:#c7baff25;color:#dfd3ff;border-color:#c7baff66}.icon-button svg{height:17px;width:17px}main{position:relative;flex:1;min-height:510px;display:flex;align-items:center;padding:55px 0 90px}.intro{max-width:620px;transition:opacity .3s,transform .3s;pointer-events:none}.eyebrow{font-size:10px;letter-spacing:2.1px;font-weight:500;color:#c0b6da;margin:0 0 28px}.eyebrow #scene-number{color:#e8defd;margin-right:9px}h1{font-size:clamp(44px,5.1vw,76px);font-weight:400;letter-spacing:-3.6px;line-height:1.08;margin:0 0 26px}h1 span{color:#b8a8d5}.scene-description{font-size:14px;line-height:1.9;color:#aaa4b8;margin:0 0 32px;letter-spacing:.12px}.actions{display:flex;gap:11px;align-items:center;flex-wrap:wrap}.primary,.secondary{border-radius:7px;min-height:49px;padding:0 19px;display:inline-flex;align-items:center;justify-content:center;gap:20px;font-size:12px;font-weight:600;letter-spacing:.05px}.primary{background:var(--accent);color:#171225;box-shadow:0 0 35px #b19fff13}.primary:hover{background:#ded3ff;color:#171225;transform:translateY(-2px)}.primary svg{width:19px;height:19px}.secondary{background:rgba(16,15,25,.6);border:1px solid #c6b5e23b;color:#d3c8e1;gap:8px}.secondary svg{width:16px;height:16px}.secondary:hover{background:#c7baff15;border-color:#c7baff88}.flight-note{font-size:10px;color:#878196;display:flex;align-items:center;gap:9px;margin-top:26px}.tiny-star{color:var(--accent);font-size:19px}.object-label{position:absolute;left:73%;top:63%;display:flex;align-items:center;gap:13px;font-size:8px;letter-spacing:1.9px;color:#cfc4dc;transition:opacity .3s}.object-label small{display:block;font-size:7px;margin-top:8px;color:#8b829b;letter-spacing:1.5px}.crosshair{width:10px;height:10px;border:1px solid #c4b2db66;position:relative}.crosshair:before{content:"";position:absolute;height:1px;width:43px;background:#c4b2db3b;right:10px;top:4px;transform:rotate(35deg);transform-origin:right}.telemetry{position:absolute;right:0;bottom:44px;width:145px}.telemetry .eyebrow{font-size:8px;letter-spacing:1.4px}.speed-value{font-size:31px;font-weight:300;line-height:1;margin:10px 0 14px;font-variant-numeric:tabular-nums}.speed-value>span+span{font-size:15px;color:#8e819f;margin-left:7px}input[type=range]{width:100%;accent-color:#c7baff;height:3px;cursor:pointer;display:block}.range-labels{display:flex;justify-content:space-between;font-size:7px;color:#797181;letter-spacing:.6px;margin-top:11px}footer{padding:0 0 22px}.destination-heading{display:flex;justify-content:space-between;align-items:center;margin-bottom:15px;color:#a49bad;font-size:8px;letter-spacing:2px}.destination-heading button{background:none;color:#aaa0ba;font-size:10px;letter-spacing:0;padding:6px 0;display:flex;align-items:center;gap:10px}.destination-heading button span{border:1px solid var(--line);border-radius:50%;width:17px;height:17px;display:grid;place-items:center;font-size:10px}.destinations{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.destination{display:flex;align-items:center;text-align:left;background:#0d0d17a6;border:1px solid var(--line);border-radius:9px;padding:17px 20px;min-height:91px;gap:18px;position:relative;overflow:hidden;backdrop-filter:blur(12px)}.destination:hover{background:#20182b99;border-color:#b7a0d459;transform:translateY(-3px)}.destination.active{border-color:#c7baff70;background:linear-gradient(110deg,#38304288,#15121f9c);box-shadow:inset 0 1px 0 #d8c6ff14}.destination-copy small{font-size:8px;letter-spacing:1.5px;color:#8e829e;display:block;margin-bottom:9px}.destination.active small{color:#c4b4d8}.destination-copy strong{font-size:13px;font-weight:500;display:block;white-space:nowrap}.destination-arrow{margin-left:auto;color:#9b8aaf;font-size:22px;font-weight:200}.scene-art{width:43px;height:43px;flex-shrink:0;position:relative;border-radius:50%}.hole-art{background:radial-gradient(circle,#090711 32%,#ffc896 37%,#9d5f48 43%,#42202a65 49%,transparent 72%);transform:rotate(-22deg)}.hole-art:after{content:"";position:absolute;top:19px;left:-7px;width:57px;height:4px;border-radius:50%;background:#ffd7aa;filter:blur(1px);box-shadow:0 0 6px #da9a73}.nebula-art{background:radial-gradient(ellipse at 60% 40%,#d6bdeccc,transparent 30%),radial-gradient(ellipse at 30% 65%,#7f7fe5cc,transparent 55%),radial-gradient(ellipse at 80% 60%,#973fbeaa,transparent 65%);filter:blur(1px)}.planet-art{background:radial-gradient(circle at 29% 26%,#d0e1de,#79a8ad 30%,#284c67 57%,#080e1d 76%);box-shadow:-2px 0 7px #a5c4e32b}.planet-art:after{content:"";position:absolute;inset:12px -11px;border:3px solid #aac4cc66;border-top-color:#a8c0c526;border-radius:50%;transform:rotate(-30deg)}.bottom-line{display:flex;justify-content:space-between;gap:20px;margin-top:24px;color:#676171;font-size:7px;letter-spacing:1.8px}.bottom-line>span:first-child{display:flex;align-items:center;gap:8px}.status-point{width:3px;height:3px;background:#9e90b8}.fiction{letter-spacing:.2px!important;font-size:9px}.travel-overlay{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;opacity:0;visibility:hidden;transition:opacity .3s;pointer-events:none;z-index:4;text-align:center;text-shadow:0 2px 30px #000}.travel-overlay>span{font-size:10px;letter-spacing:5px;color:#d1c7e3}.travel-overlay strong{font-size:clamp(28px,5vw,65px);font-weight:300;margin:20px}.travel-line{width:170px;height:1px;background:#dfd0ff;transform:scaleX(0)}.traveling .travel-overlay{opacity:1;visibility:visible}.traveling .intro,.traveling .object-label,.traveling .telemetry{opacity:0}.traveling .travel-line{animation:travel-progress 1.9s ease-in-out forwards}@keyframes travel-progress{to{transform:scaleX(1)}}.toast{position:fixed;bottom:28px;left:50%;transform:translate(-50%,15px);padding:15px 24px;background:#211b30ed;border:1px solid #bba5d342;box-shadow:0 10px 40px #0007;backdrop-filter:blur(15px);border-radius:9px;font-size:13px;z-index:20;opacity:0;transition:opacity .25s,transform .25s;pointer-events:none;max-width:min(520px,90vw);text-align:center;line-height:1.5}.toast.show{opacity:1;transform:translate(-50%,0)}.modal{background:radial-gradient(ellipse at 50% 25%,#242037,#12101b 60%);border:1px solid #aaa0c545;color:var(--text);padding:34px 38px;border-radius:17px;width:min(480px,calc(100% - 32px));max-height:90svh;overflow:auto;box-shadow:0 35px 120px #0009}.modal::backdrop{background:#04040bb5;backdrop-filter:blur(12px)}.modal .eyebrow{font-size:9px;margin-bottom:17px}.close-modal{position:absolute;right:17px;top:17px;width:31px;height:31px}.close-modal svg{width:15px}h2{font-size:31px;line-height:1.2;font-weight:400;letter-spacing:-1px;margin:0}.modal-sub{color:#92879f;font-size:13px;margin:11px 0 0}.planet-preview{height:180px;position:relative;display:grid;place-items:center}.planet-preview>span{position:absolute;bottom:5px;font-size:7px;letter-spacing:2px;color:#70647c}.preview-orbit{position:absolute;width:255px;height:105px;border:1px solid #bba3ef13;border-radius:50%;transform:rotate(-20deg)}#preview-planet{width:85px;height:85px;background:radial-gradient(circle at 28% 24%,#e6daff,#a998ed 20%,#4b3e73 58%,#0b0718 78%);border-radius:50%;box-shadow:-3px -1px 16px #b397eb20;position:absolute}#preview-rings{width:144px;height:36px;border:8px solid #ad9bce74;border-top-color:#ad9bce20;border-radius:50%;transform:rotate(-24deg);position:absolute}form>label,legend{font-size:11px;color:#c4b8d0;display:block;margin:16px 0 10px}input[type=text],input:not([type]){width:100%;border:1px solid #ab92ce36;border-radius:7px;background:#09081077;color:#eae2f5;padding:12px 13px;font-size:13px}input::placeholder{color:#665d74}.form-row{display:flex;align-items:center;justify-content:space-between;gap:20px}fieldset{border:0;padding:0;margin:0}legend{padding:0;margin-top:20px}.swatches{display:flex;gap:11px}.swatches label{cursor:pointer;position:relative;display:grid;place-items:center}.swatches input{position:absolute;width:1px;height:1px;opacity:0}.swatches span{width:22px;height:22px;background:var(--swatch);border-radius:50%;border:3px solid #17121f;outline:1px solid transparent}.swatches input:checked+span{outline-color:#e7dfff}.swatches input:focus-visible+span{outline:2px solid #fff;outline-offset:3px}.ring-toggle{font-size:11px;display:flex;align-items:center;gap:8px;color:#c4b8d0;margin-top:23px;cursor:pointer;position:relative}.ring-toggle input{position:absolute;opacity:0;width:1px;height:1px}.switch{width:29px;height:17px;border-radius:14px;background:#494154;position:relative}.switch:after{content:"";position:absolute;left:3px;top:3px;width:11px;height:11px;border-radius:50%;background:#eee6ff;transition:transform .2s}.ring-toggle input:checked+.switch{background:#81709e}.ring-toggle input:checked+.switch:after{transform:translateX(12px)}.ring-toggle input:focus-visible+.switch{outline:2px solid white;outline-offset:3px}.size-label{display:flex;justify-content:space-between}.size-label output{color:#867a99}.wide{width:100%;margin-top:25px}.form-note{font-size:10px;color:#766b85;text-align:center;margin:13px 0 0;line-height:1.5}.help-list{margin-top:25px}.help-list p{display:flex;justify-content:space-between;align-items:center;gap:18px;margin:0;padding:15px 0;border-bottom:1px solid var(--line);font-size:12px;color:#dfd4ed}.help-list p>span+span{color:#998ba9;text-align:right}kbd{display:inline-grid;place-items:center;min-width:24px;height:24px;padding:0 5px;border:1px solid #c9b1ed33;background:#c3a2f00a;border-radius:5px;font-size:10px;color:#c9b3e6;font-family:inherit}.help-foot{font-size:12px;color:#9b8daa;line-height:1.7;margin:22px 0 0}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}body.reduced *{animation-duration:.001ms!important;transition-duration:.001ms!important}
+@media(min-width:1600px){.app{padding:0 6%}main{min-height:650px}.intro{max-width:700px}h1{font-size:85px}.scene-description{font-size:16px}.primary,.secondary{font-size:13px}.destination{min-height:105px}.destination-copy strong{font-size:15px}}
+@media(max-width:1100px){.live{display:none}.app{padding:0 4%}h1{font-size:58px}.intro{max-width:530px}.destination{padding:16px 14px;gap:12px}.destination-copy strong{font-size:11px}.destination-copy small{font-size:7px}.destination-arrow{display:none}.telemetry{width:120px}.object-label{left:76%;font-size:7px}.object-label small{font-size:6px}.scene-art{width:36px;height:36px}.hole-art:after{top:16px;left:-5px;width:46px}}
+@media(max-width:760px){.app{padding:0 22px;min-height:100svh}.topbar{height:85px}.brand{font-size:18px;letter-spacing:4px;gap:8px}.brand svg{width:30px;height:30px}.brand small{font-size:6px;letter-spacing:1.3px}.tools{gap:6px}.icon-button{height:33px;width:33px}.fullscreen{display:none}.tools svg{width:15px;height:15px}main{min-height:640px;padding:52px 0 58px;align-items:flex-start}.intro{max-width:450px}h1{font-size:53px;letter-spacing:-2.5px}.eyebrow{font-size:8px;margin-bottom:21px;letter-spacing:1.5px}.scene-description{font-size:12px;line-height:1.8;margin-bottom:25px}.primary,.secondary{min-height:44px;font-size:11px;padding:0 14px;gap:12px}.flight-note{font-size:9px;margin-top:19px}.shade{background:linear-gradient(180deg,#07081155 0%,#07081155 27%,transparent 55%)}.vignette{background:linear-gradient(0deg,#070811 0%,#07081188 15%,transparent 40%,transparent 80%,#07081188)}.object-label{top:auto;bottom:125px;left:60%;font-size:6px;letter-spacing:1.2px}.object-label small{font-size:5px;letter-spacing:1px}.telemetry{bottom:24px;width:110px}.telemetry .eyebrow{font-size:7px}.speed-value{font-size:24px;margin:8px 0 11px}.range-labels{font-size:6px}.destination-heading{font-size:7px;letter-spacing:1.2px}.destination-heading button{font-size:9px}.destinations{gap:7px}.destination{padding:15px 7px;display:flex;flex-direction:column;gap:12px;text-align:center;min-height:127px}.destination-copy small{font-size:6px;letter-spacing:.6px;line-height:1.4;min-height:16px;margin-bottom:3px}.destination-copy strong{font-size:10px;white-space:normal;line-height:1.5}.scene-art{width:33px;height:33px}.hole-art:after{top:15px}.bottom-line{font-size:6px;letter-spacing:.8px;margin-top:18px;gap:8px}.bottom-line .fiction{display:none}.modal{padding:30px 26px}.toast{bottom:20px;font-size:12px}.travel-overlay strong{max-width:300px}}
+@media(max-width:390px){.app{padding:0 15px}.brand small{display:none}.tools{gap:5px}h1{font-size:46px}.actions{gap:8px}.primary,.secondary{padding:0 12px;font-size:10px}.destination-heading{font-size:6px}.destination-heading button{font-size:8px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.001ms!important;transition-duration:.001ms!important}}
+@media(max-width:760px){#cosmos{position:absolute;height:810px;touch-action:pan-y}.object-label{bottom:100px}.telemetry{bottom:12px}.shade{position:absolute;height:810px}.vignette{position:absolute;height:950px;background:linear-gradient(0deg,#070811 0%,#07081188 15%,transparent 36%,transparent 80%,#07081188)}}
+#world-list{background:none;color:#c7baff;padding:2px 0;font-size:10px;border-bottom:1px solid #c7baff44;margin-left:5px}.world-content article{padding:20px 0 5px;border-bottom:1px solid var(--line)}.world-content h3{font-size:15px;font-weight:500;margin:0 0 9px}.world-content p{font-size:12px;line-height:1.7;color:#ac9bbb;margin:0 0 15px}.flight-note{flex-wrap:wrap}
+@media(max-width:760px){h1{font-size:clamp(34px,9.6vw,53px);letter-spacing:-2px}.actions{gap:8px}.primary,.secondary{gap:10px}}
+</style>
+</head>
+<body>
+  <canvas id="cosmos" aria-label="Анимированная космическая сцена. Перетаскивай, чтобы изменить ракурс."></canvas>
+  <div class="shade" aria-hidden="true"></div><div class="vignette" aria-hidden="true"></div>
+  <svg class="sprite" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs>
+    <symbol id="i-orbit" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4" fill="currentColor" stroke="none"/><ellipse cx="12" cy="12" rx="11" ry="4.2" transform="rotate(-35 12 12)"/></symbol>
+    <symbol id="i-sound" viewBox="0 0 24 24"><path d="M11 5 6 9H3v6h3l5 4zM15 8a6 6 0 0 1 0 8M18 5a10 10 0 0 1 0 14"/></symbol>
+    <symbol id="i-mute" viewBox="0 0 24 24"><path d="M11 5 6 9H3v6h3l5 4zM16 9l5 6m0-6-5 6"/></symbol>
+    <symbol id="i-pause" viewBox="0 0 24 24"><path d="M8 5v14M16 5v14"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><path d="m8 5 11 7-11 7z"/></symbol>
+    <symbol id="i-expand" viewBox="0 0 24 24"><path d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M4 12h16m-6-6 6 6-6 6"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-camera" viewBox="0 0 24 24"><path d="M3 7h5l2-3h4l2 3h5v13H3z"/><circle cx="12" cy="13" r="4"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></symbol>
+  </defs></svg>
+  <div class="app">
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="ОРБИТА, к началу"><svg><use href="#i-orbit"/></svg><span>ОРБИТА<small>ТВОЯ МАЛЕНЬКАЯ БЕСКОНЕЧНОСТЬ</small></span></a>
+      <div class="live"><span class="live-dot"></span>СИГНАЛ УСТОЙЧИВ<span class="divider"></span><span id="mission-clock">00:00:00</span></div>
+      <div class="tools">
+        <button class="icon-button" id="sound" title="Включить звук · M" aria-label="Включить звук" aria-pressed="false"><svg><use href="#i-mute"/></svg></button>
+        <button class="icon-button" id="pause" title="Пауза · P" aria-label="Приостановить движение" aria-pressed="false"><svg><use href="#i-pause"/></svg></button>
+        <button class="icon-button" id="capture" title="Сохранить открытку" aria-label="Сохранить космическую открытку"><svg><use href="#i-camera"/></svg></button>
+        <button class="icon-button fullscreen" id="fullscreen" title="На весь экран" aria-label="Открыть на весь экран"><svg><use href="#i-expand"/></svg></button>
+      </div>
+    </header>
+    <main>
+      <section class="intro" aria-labelledby="scene-title">
+        <p class="eyebrow"><span id="scene-number">01</span> / ЛИЧНАЯ ОБСЕРВАТОРИЯ</p>
+        <h1 id="scene-title">На краю<br><span>бесконечности.</span></h1>
+        <p class="scene-description" id="scene-description">Здесь заканчивается привычный мир.<br>И начинается твоя вселенная.</p>
+        <div class="actions"><button class="primary" id="warp">Совершить гиперпрыжок<svg><use href="#i-arrow"/></svg></button><button class="secondary" id="create"><svg><use href="#i-plus"/></svg>Создать планету</button></div>
+        <div class="flight-note"><span class="tiny-star">✧</span><span id="flight-note">Потяни за звёзды — измени ракурс</span><button id="world-list" hidden>Каталог миров ↗</button></div>
+      </section>
+      <div class="object-label" aria-hidden="true"><div class="crosshair"></div><span id="object-label">SINGULARITY — 001<small id="object-subtitle">ЗА ГРАНИЦЕЙ ИЗВЕСТНОГО</small></span></div>
+      <aside class="telemetry"><span class="eyebrow">ТЕЧЕНИЕ ВРЕМЕНИ</span><div class="speed-value"><span id="speed-value">1.0</span><span>×</span></div><label class="sr-only" for="speed">Скорость времени</label><input id="speed" type="range" min="0.1" max="3" step="0.1" value="1"><div class="range-labels"><span>МЕДЛЕННЕЕ</span><span>БЫСТРЕЕ</span></div></aside>
+      <div class="travel-overlay" aria-hidden="true"><span>ПРОКЛАДЫВАЕМ ПУТЬ</span><strong>Сквозь бесконечность</strong><div class="travel-line"></div></div>
+    </main>
+    <footer>
+      <div class="destination-heading"><span>ВЫБЕРИ СВОЮ НЕИЗВЕСТНОСТЬ</span><button id="help">Как здесь всё устроено <span>?</span></button></div>
+      <nav class="destinations" aria-label="Космические локации">
+        <button class="destination active" data-scene="horizon" aria-pressed="true"><span class="scene-art hole-art" aria-hidden="true"></span><span class="destination-copy"><small>01 / СИНГУЛЯРНОСТЬ</small><strong>Горизонт событий</strong></span><span class="destination-arrow">↗</span></button>
+        <button class="destination" data-scene="nebula" aria-pressed="false"><span class="scene-art nebula-art" aria-hidden="true"></span><span class="destination-copy"><small>02 / ЗВЁЗДНАЯ КОЛЫБЕЛЬ</small><strong>Шёпот туманности</strong></span><span class="destination-arrow">↗</span></button>
+        <button class="destination" data-scene="system" aria-pressed="false"><span class="scene-art planet-art" aria-hidden="true"></span><span class="destination-copy"><small>03 / НОВЫЕ МИРЫ</small><strong>Твоя звёздная система</strong></span><span class="destination-arrow">↗</span></button>
+      </nav>
+      <div class="bottom-line"><span><span class="status-point"></span>КОСМОС БЛИЖЕ, ЧЕМ КАЖЕТСЯ</span><span id="discovered">ИССЛЕДОВАНО 01 / 03</span><span class="fiction">Художественная модель вселенной</span></div>
+    </footer>
+  </div>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <dialog id="planet-dialog" class="modal planet-modal" aria-labelledby="planet-heading">
+    <button class="icon-button close-modal" data-close aria-label="Закрыть конструктор"><svg><use href="#i-close"/></svg></button>
+    <p class="eyebrow">МАСТЕРСКАЯ МИРОВ</p><h2 id="planet-heading">У каждой планеты<br>есть начало.</h2><p class="modal-sub">У этой — ты.</p>
+    <div class="planet-preview" aria-hidden="true"><div class="preview-orbit"></div><div id="preview-planet"></div><div id="preview-rings"></div><span>ПЕРВЫЙ ВЗГЛЯД НА НОВЫЙ МИР</span></div>
+    <form id="planet-form"><label for="planet-name">Название планеты</label><input id="planet-name" name="name" maxlength="28" placeholder="Например, Аврора" required autocomplete="off">
+      <div class="form-row"><fieldset><legend>Палитра</legend><div class="swatches"><label><input type="radio" name="color" value="#a998ed" checked aria-label="Лавандовая"><span style="--swatch:#a998ed"></span></label><label><input type="radio" name="color" value="#66cbbb" aria-label="Бирюзовая"><span style="--swatch:#66cbbb"></span></label><label><input type="radio" name="color" value="#e2a270" aria-label="Янтарная"><span style="--swatch:#e2a270"></span></label><label><input type="radio" name="color" value="#81a8ec" aria-label="Голубая"><span style="--swatch:#81a8ec"></span></label><label><input type="radio" name="color" value="#e495b5" aria-label="Розовая"><span style="--swatch:#e495b5"></span></label></div></fieldset><label class="ring-toggle"><input type="checkbox" id="planet-rings" checked><span class="switch"></span>Кольца</label></div>
+      <label class="size-label" for="planet-size">Размер <output id="size-output">1.0 ×</output></label><input type="range" id="planet-size" min="0.5" max="2" step="0.1" value="1">
+      <button type="submit" class="primary wide">Подарить вселенной новый мир<svg><use href="#i-plus"/></svg></button><p class="form-note" id="planet-limit">Планеты сохраняются в этом браузере.</p>
+    </form>
+  </dialog>
+  <dialog id="help-dialog" class="modal help-modal" aria-labelledby="help-heading"><button class="icon-button close-modal" data-close aria-label="Закрыть инструкцию"><svg><use href="#i-close"/></svg></button><p class="eyebrow">НЕБОЛЬШОЙ БОРТОВОЙ СПРАВОЧНИК</p><h2 id="help-heading">Можешь просто<br>потеряться здесь.</h2><p class="modal-sub">Или взять управление на себя.</p><div class="help-list"><p><span>Перетаскивай сцену</span><span>Меняй ракурс</span></p><p><span>Нажимай на планеты</span><span>Узнавай их имена</span></p><p><span>Гиперпрыжок</span><kbd>H</kbd></p><p><span>Три локации</span><span><kbd>1</kbd> <kbd>2</kbd> <kbd>3</kbd></span></p><p><span>Пауза / звук</span><span><kbd>P</kbd> <kbd>M</kbd></span></p></div><p class="help-foot">Звук создаётся прямо здесь. Надень наушники, включи его и дай себе пару минут.<br><br>Это художественный космос: масштабы и движение придуманы ради впечатления.</p><button class="secondary wide" id="reduce-motion" aria-pressed="false">Уменьшить движение</button></dialog>
+  <dialog id="world-dialog" class="modal" aria-labelledby="world-heading"><button class="icon-button close-modal" data-close aria-label="Закрыть каталог"><svg><use href="#i-close"/></svg></button><p class="eyebrow">АТЛАС ЛИЧНОЙ ВСЕЛЕННОЙ</p><h2 id="world-heading">Миры твоей системы</h2><div id="world-content" class="world-content"></div></dialog>
+  <script>/* ORBITA — procedural universe. No external images or dependencies. */
+(() => {
+  'use strict';
+  const TAU = Math.PI * 2;
+  const clamp = (n, a, b) => Math.max(a, Math.min(b, n));
+  const mix = (a, b, t) => a + (b - a) * t;
+  function random(seed) { return () => { seed |= 0; seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+  const surface = (w, h) => { const c = document.createElement('canvas'); c.width = w; c.height = h; return c; };
+  function rgb(hex) { const m = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex || ''); return m ? m.slice(1).map(s => parseInt(s, 16)) : [115, 174, 220]; }
+  function glowSprite(color = '255,190,120') {
+    const c = surface(128, 128), x = c.getContext('2d');
+    const g = x.createRadialGradient(64, 64, 0, 64, 64, 64);
+    g.addColorStop(0, `rgba(${color},0.95)`); g.addColorStop(.08, `rgba(${color},0.7)`); g.addColorStop(.24, `rgba(${color},0.18)`); g.addColorStop(1, `rgba(${color},0)`);
+    x.fillStyle = g; x.fillRect(0, 0, 128, 128); return c;
+  }
+  function blackHoleArt() {
+    const c = surface(1600, 1100), x = c.getContext('2d'), r = random(1827);
+    x.translate(800, 550);
+    x.scale(1, 1);
+    // The accretion flow is baked once; its fine grains remain inexpensive to animate.
+    x.save(); x.scale(1, .32);
+    const atmosphere = x.createRadialGradient(0, 0, 70, 0, 0, 770);
+    atmosphere.addColorStop(0, 'rgba(255,136,57,.12)'); atmosphere.addColorStop(.25, 'rgba(255,133,47,.2)'); atmosphere.addColorStop(.55, 'rgba(221,80,19,.065)'); atmosphere.addColorStop(1, 'rgba(116,38,14,0)');
+    x.fillStyle = atmosphere; x.fillRect(-800, -800, 1600, 1600); x.restore();
+    x.globalCompositeOperation = 'screen';
+    for (let i = 0; i < 250; i++) {
+      const rad = 166 + i * 2.05;
+      const a = Math.pow(1 - i / 250, 2) * .25;
+      x.beginPath(); x.ellipse(0, 0, rad, rad * .255, 0, 0, TAU);
+      x.strokeStyle = `rgba(255,${Math.round(153 + 88 * (1 - i / 250))},${Math.round(65 + 110 * (1 - i / 250))},${a})`;
+      x.lineWidth = 1.8 + r() * 2; x.stroke();
+    }
+    for (let i = 0; i < 17000; i++) {
+      const rad = 167 + Math.pow(r(), 1.65) * 530, angle = r() * TAU;
+      const px = Math.cos(angle) * rad, py = Math.sin(angle) * rad * .255 + (r() - .5) * (6 + rad * .022);
+      const alpha = (1 - (rad - 167) / 600) * (.07 + r() * .5);
+      x.fillStyle = `rgba(255,${Math.round(137 + r() * 100)},${Math.round(54 + r() * 125)},${alpha})`;
+      x.fillRect(px, py, .8 + r() * 2.8, .4 + r() * .9);
+    }
+    // Light bent around the event horizon forms the tall rear image of the disk.
+    for (let i = 48; i >= 0; i--) {
+      const rad = 158 + i * .9;
+      x.beginPath(); x.ellipse(0, -2, rad * 1.02, rad, 0, Math.PI, TAU);
+      x.strokeStyle = `rgba(255,${190 + Math.round((1 - i / 48) * 55)},${105 + Math.round((1 - i / 48) * 119)},${.014 + Math.pow(1 - i / 49, 5) * .32})`;
+      x.lineWidth = 2 + i * .07; x.stroke();
+    }
+    const halo = x.createRadialGradient(0, 0, 137, 0, 0, 228);
+    halo.addColorStop(0, 'rgba(255,231,178,0)'); halo.addColorStop(.23, 'rgba(255,179,89,.26)'); halo.addColorStop(.46, 'rgba(249,116,41,.08)'); halo.addColorStop(1, 'rgba(160,48,13,0)');
+    x.fillStyle = halo; x.beginPath(); x.arc(0, 0, 228, 0, TAU); x.fill();
+    x.globalCompositeOperation = 'source-over';
+    // An opaque shadow is essential: background stars never show through the hole.
+    x.fillStyle = '#010205'; x.beginPath(); x.arc(0, 0, 153, 0, TAU); x.fill();
+    x.globalCompositeOperation = 'screen';
+    for (let i = 18; i >= 0; i--) {
+      x.beginPath(); x.arc(0, 0, 155.5 + i * .24, 0, TAU);
+      x.lineWidth = 1 + i * .65;
+      x.strokeStyle = `rgba(255,${217 - i * 3},${167 - i * 4},${i === 0 ? .98 : .018})`; x.stroke();
+    }
+    // Near-side arc: the disk wraps around the lower edge of the silhouette.
+    for (let i = 0; i < 125; i++) {
+      const rad = 163 + i * 3.9;
+      x.beginPath(); x.ellipse(0, 7, rad, rad * .255, 0, 0, Math.PI);
+      x.lineWidth = 1 + r() * 2;
+      x.strokeStyle = `rgba(255,${Math.round(213 - i * .52)},${Math.round(133 - i * .65)},${.22 * Math.pow(1 - i / 125, 1.6)})`; x.stroke();
+    }
+    // A Doppler-brightened edge makes the asymmetry feel alive.
+    const hot = x.createRadialGradient(-168, 12, 0, -168, 12, 100);
+    hot.addColorStop(0, 'rgba(255,240,204,.6)'); hot.addColorStop(.13, 'rgba(255,197,120,.3)'); hot.addColorStop(1, 'rgba(255,116,38,0)');
+    x.save(); x.scale(1, .38); x.fillStyle = hot; x.fillRect(-280, -100, 260, 240); x.restore();
+    return c;
+  }
+  function nebulaArt() {
+    const c = surface(1100, 800), x = c.getContext('2d'), r = random(83149);
+    const sprites = ['119,62,237', '64,103,196', '216,89,155', '76,162,209'].map(glowSprite);
+    x.globalCompositeOperation = 'screen';
+    for (let i = 0; i < 520; i++) {
+      const t = r() * TAU * 1.32, reach = 90 + r() * 360;
+      const px = 590 + Math.cos(t) * reach * .95 + (r() - .5) * 120;
+      const py = 390 + Math.sin(t * 1.3) * reach * .65 + (r() - .5) * 110;
+      const size = 110 + r() * 290;
+      x.globalAlpha = .012 + r() * .047;
+      x.drawImage(sprites[Math.floor(r() * sprites.length)], px - size / 2, py - size / 2, size, size);
+    }
+    x.globalCompositeOperation = 'destination-out';
+    const dark = glowSprite('255,255,255');
+    for (let i = 0; i < 100; i++) {
+      const t = i / 100, px = 150 + t * 760, py = 410 + Math.sin(t * 8) * 105;
+      const size = 90 + r() * 130; x.globalAlpha = .085;
+      x.drawImage(dark, px - size / 2, py - size / 2, size, size);
+    }
+    x.globalAlpha = 1; return c;
+  }
+  function planetArt(color, rings, seed) {
+    const c = surface(200, 200), x = c.getContext('2d'), r = random(seed), col = rgb(color), radius = 47;
+    x.translate(100, 100);
+    if (rings) { x.save(); x.rotate(-.37); x.beginPath(); x.ellipse(0, 0, 83, 25, 0, Math.PI, TAU); x.strokeStyle = `rgba(${col.join(',')},.53)`; x.lineWidth = 13; x.stroke(); x.restore(); }
+    const g = x.createRadialGradient(-18, -19, 2, 6, 8, 61);
+    g.addColorStop(0, `rgb(${col.map(v => Math.min(255, v + 65)).join(',')})`); g.addColorStop(.42, color); g.addColorStop(.8, `rgb(${col.map(v => Math.round(v * .3)).join(',')})`); g.addColorStop(1, '#060912');
+    x.fillStyle = g; x.beginPath(); x.arc(0, 0, radius, 0, TAU); x.fill();
+    x.save(); x.beginPath(); x.arc(0, 0, radius - .5, 0, TAU); x.clip();
+    for (let i = 0; i < 45; i++) {
+      x.beginPath(); x.ellipse((r() - .5) * 55, (r() - .5) * 95, 3 + r() * 45, 1 + r() * 4, -.28, 0, TAU);
+      x.fillStyle = r() > .5 ? `rgba(255,255,255,${.02 + r() * .09})` : `rgba(0,10,30,${.04 + r() * .12})`; x.fill();
+    }
+    const shade = x.createLinearGradient(-40, -20, 40, 25); shade.addColorStop(0, 'rgba(0,0,0,0)'); shade.addColorStop(.5, 'rgba(0,0,0,0)'); shade.addColorStop(1, 'rgba(0,2,12,.7)'); x.fillStyle = shade; x.fillRect(-50, -50, 100, 100); x.restore();
+    x.beginPath(); x.arc(0, 0, radius + .5, 0, TAU); x.strokeStyle = `rgba(${col.join(',')},.3)`; x.lineWidth = 1.5; x.stroke();
+    if (rings) { x.save(); x.rotate(-.37); for (let i = 0; i < 9; i++) { x.beginPath(); x.ellipse(0, 0, 73 + i * 1.8, 21 + i * .6, 0, 0, Math.PI); x.strokeStyle = `rgba(${col.join(',')},${.2 + r() * .35})`; x.lineWidth = 1.2; x.stroke(); } x.restore(); }
+    return c;
+  }
+  class CosmosRenderer {
+    constructor(canvas, options = {}) {
+      this.canvas = canvas; this.ctx = canvas.getContext('2d', { alpha: false });
+      if (!this.ctx) throw new Error('Canvas 2D is unavailable');
+      this.onObjectClick = options.onObjectClick;
+      this.scene = 'horizon'; this.previousScene = null; this.transition = 1;
+      this.speed = 1; this.paused = false; this.reduced = false; this.time = 0; this.last = 0; this.dead = false;
+      this.pointer = { x: 0, y: 0 }; this.smoothPointer = { x: 0, y: 0 }; this.drag = null; this.rotation = 0; this.hitTargets = [];
+      this.blackHole = blackHoleArt(); this.nebula = nebulaArt();
+      this.goldGlow = glowSprite('255,181,88'); this.blueGlow = glowSprite('167,204,255'); this.purpleGlow = glowSprite('185,136,255');
+      const r = random(39815);
+      this.stars = Array.from({ length: 730 }, () => ({ x: r(), y: r(), z: .15 + r() * .85, size: .25 + Math.pow(r(), 5) * 1.7, phase: r() * TAU, hue: r() }));
+      this.warpStars = Array.from({ length: 200 }, () => ({ angle: r() * TAU, distance: .08 + r() * 1.2, length: .04 + r() * .18 }));
+      this.planets = [];
+      const defaults = [
+        ['Элиос', '#df9a72', .75, false, 'Тёплый каменный мир. Его медные равнины освещают сразу две луны.'],
+        ['Таласса', '#6eb9cc', 1.05, false, 'Океаническая планета. Под синими облаками может скрываться целый мир.'],
+        ['Аурелия', '#c9a47d', 1.32, true, 'Газовый гигант с кольцами из миллиардов ледяных частиц.'],
+        ['Никс', '#a18ade', .85, false, 'Тихий ледяной мир на окраине системы. Один год здесь длится десятилетия.']
+      ];
+      defaults.forEach(([name, color, size, rings, description], i) => this._addPlanet({ name, color, size, rings, description, phase: [.8, 3.65, 2.35, 5.65][i] }));
+      this._resize = this.resize.bind(this); this._move = this.pointerMove.bind(this); this._down = this.pointerDown.bind(this); this._up = this.pointerUp.bind(this);
+      this._leave = () => { if (!this.drag) this.pointer = { x: 0, y: 0 }; };
+      canvas.addEventListener('pointermove', this._move); canvas.addEventListener('pointerdown', this._down); canvas.addEventListener('pointerup', this._up); canvas.addEventListener('pointercancel', this._up); canvas.addEventListener('pointerleave', this._leave);
+      this.resizeObserver = typeof ResizeObserver !== 'undefined' ? new ResizeObserver(this._resize) : null;
+      if (this.resizeObserver) this.resizeObserver.observe(canvas); window.addEventListener('resize', this._resize);
+      this.resize(); this.frame = this.frame.bind(this); this.raf = requestAnimationFrame(this.frame);
+    }
+    resize() {
+      const rect = this.canvas.getBoundingClientRect(); this.w = Math.max(1, rect.width || window.innerWidth); this.h = Math.max(1, rect.height || window.innerHeight);
+      this.dpr = Math.min(window.devicePixelRatio || 1, 2); this.canvas.width = Math.round(this.w * this.dpr); this.canvas.height = Math.round(this.h * this.dpr);
+      this.ctx.setTransform(this.dpr, 0, 0, this.dpr, 0, 0);
+    }
+    setScene(scene) { if (!['horizon', 'nebula', 'system'].includes(scene) || scene === this.scene) return; this.previousScene = this.scene; this.scene = scene; this.transition = this.reduced ? 1 : 0; this.hitTargets = []; }
+    setSpeed(speed) { this.speed = clamp(Number(speed) || 0, 0, 3); }
+    setPaused(paused) { this.paused = Boolean(paused); }
+    setReducedMotion(reduced) { this.reduced = Boolean(reduced); }
+    getPlanetCount() { return this.planets.length; }
+    _addPlanet(p) {
+      const i = this.planets.length;
+      const planet = { name: String(p.name || `Новый мир ${i + 1}`).slice(0, 40), color: /^#[0-9a-f]{6}$/i.test(p.color || '') ? p.color : '#8ca5dd', size: clamp(Number(p.size) || 1, .5, 2), rings: Boolean(p.rings), phase: Number.isFinite(p.phase) ? p.phase : i * 2.399, description: p.description || 'Ты создал этот мир. У каждой новой планеты — своя орбита и своя история.', id: i };
+      planet.sprite = planetArt(planet.color, planet.rings, 1028 + i * 813); this.planets.push(planet); return { name: planet.name, description: planet.description };
+    }
+    createPlanet(config = {}) { return this._addPlanet(config); }
+    warp() {
+      if (this.warpResolve) this.warpResolve(); this.warpStart = performance.now();
+      return new Promise(resolve => { this.warpResolve = resolve; });
+    }
+    pointerDown(e) { if (e.button && e.button !== 0) return; this.drag = { x: e.clientX, y: e.clientY, rotation: this.rotation }; try { this.canvas.setPointerCapture(e.pointerId); } catch (_) {} }
+    pointerMove(e) {
+      const rect = this.canvas.getBoundingClientRect(); this.pointer = { x: ((e.clientX - rect.left) / this.w - .5) * 2, y: ((e.clientY - rect.top) / this.h - .5) * 2 };
+      if (this.drag) this.rotation = clamp(this.drag.rotation + (e.clientX - this.drag.x) / this.w * .6, -.6, .6);
+      if (this.scene === 'system') { const px = e.clientX - rect.left, py = e.clientY - rect.top; this.canvas.style.cursor = this.hitTargets.some(p => Math.hypot(px - p.x, py - p.y) < p.r) ? 'pointer' : 'grab'; }
+    }
+    pointerUp(e) {
+      if (!this.drag) return; const distance = Math.hypot(e.clientX - this.drag.x, e.clientY - this.drag.y); this.drag = null;
+      if (distance > 8 || e.type === 'pointercancel' || this.scene !== 'system') return;
+      const rect = this.canvas.getBoundingClientRect(), px = e.clientX - rect.left, py = e.clientY - rect.top;
+      const planet = [...this.hitTargets].reverse().find(p => Math.hypot(px - p.x, py - p.y) <= p.r);
+      if (planet && this.onObjectClick) this.onObjectClick({ name: planet.name, description: planet.description });
+    }
+    frame(now) {
+      if (this.dead) return;
+      const dt = Math.min(.05, (now - (this.last || now)) / 1000); this.last = now;
+      if (!this.paused && !this.reduced) this.time += dt * this.speed;
+      this.transition = Math.min(1, this.transition + dt * 1.25);
+      const smoothing = 1 - Math.exp(-dt * 4);
+      this.smoothPointer.x = mix(this.smoothPointer.x, this.reduced ? 0 : this.pointer.x, smoothing); this.smoothPointer.y = mix(this.smoothPointer.y, this.reduced ? 0 : this.pointer.y, smoothing);
+      this.draw(now); this.raf = requestAnimationFrame(this.frame);
+    }
+    center() { return { x: this.w <= 760 ? this.w * .5 : this.w * .68, y: this.w <= 760 ? this.h * .68 : this.h * .46 }; }
+    draw(now) {
+      const x = this.ctx; x.setTransform(this.dpr, 0, 0, this.dpr, 0, 0); x.globalAlpha = 1; x.globalCompositeOperation = 'source-over';
+      x.fillStyle = '#03050a'; x.fillRect(0, 0, this.w, this.h);
+      this.drawStars();
+      if (this.previousScene && this.transition < 1) this.drawScene(this.previousScene, 1 - this.transition);
+      this.drawScene(this.scene, this.transition);
+      if (this.warpResolve) {
+        const progress = (now - this.warpStart) / (this.reduced ? 450 : 2150);
+        this.drawWarp(clamp(progress, 0, 1));
+        if (progress >= 1) { const resolve = this.warpResolve; this.warpResolve = null; resolve(); }
+      }
+      // Keep the edges quiet and the center of the composition luminous.
+      x.globalAlpha = 1; x.globalCompositeOperation = 'source-over';
+      const vignette = x.createRadialGradient(this.w * .6, this.h * .45, this.h * .15, this.w * .55, this.h * .5, Math.max(this.w, this.h) * .69);
+      vignette.addColorStop(0, 'rgba(1,3,9,0)'); vignette.addColorStop(1, 'rgba(1,3,9,.68)'); x.fillStyle = vignette; x.fillRect(0, 0, this.w, this.h);
+    }
+    drawStars() {
+      const x = this.ctx, p = this.smoothPointer;
+      for (const star of this.stars) {
+        const sx = ((star.x * this.w + p.x * star.z * 15 + this.time * star.z * .4) % this.w + this.w) % this.w;
+        const sy = star.y * this.h + p.y * star.z * 12;
+        const alpha = (.25 + star.z * .55) * (.82 + Math.sin(this.time * .5 + star.phase) * .18);
+        x.fillStyle = star.hue > .82 ? `rgba(236,191,145,${alpha})` : `rgba(186,205,231,${alpha})`;
+        x.beginPath(); x.arc(sx, sy, star.size, 0, TAU); x.fill();
+        if (star.size > 1.4) { x.globalAlpha = alpha * .4; x.drawImage(this.blueGlow, sx - 10, sy - 10, 20, 20); x.globalAlpha = 1; }
+      }
+    }
+    drawScene(scene, alpha) { if (alpha <= 0) return; this.ctx.save(); this.ctx.globalAlpha = alpha; if (scene === 'horizon') this.drawHorizon(); else if (scene === 'nebula') this.drawNebula(); else this.drawSystem(); this.ctx.restore(); }
+    drawHorizon() {
+      const x = this.ctx, c = this.center(), radius = Math.min(this.w * (this.w <= 760 ? .18 : .16), this.h * .19);
+      const scale = radius / 156, p = this.smoothPointer;
+      x.translate(c.x + p.x * 11, c.y + p.y * 7); x.rotate(-.19 + this.rotation + p.x * .025);
+      x.drawImage(this.blackHole, -800 * scale, -550 * scale, 1600 * scale, 1100 * scale);
+      x.globalCompositeOperation = 'screen';
+      // A thin drifting hot spot follows the photon ring.
+      const a = this.time * .09 + 3.5;
+      x.globalAlpha *= .3 + Math.sin(this.time * .7) * .04;
+      const spot = radius * .45; x.drawImage(this.goldGlow, Math.cos(a) * radius - spot / 2, Math.sin(a) * radius - spot / 2, spot, spot);
+    }
+    drawNebula() {
+      const x = this.ctx, c = this.center(), p = this.smoothPointer;
+      const scale = Math.max(this.w / 1000, this.h / 750) * 1.25;
+      x.save(); x.translate(c.x + p.x * 20, c.y + p.y * 13); x.rotate(Math.sin(this.time * .018) * .04 + this.rotation * .2);
+      x.globalCompositeOperation = 'screen'; x.drawImage(this.nebula, -550 * scale, -400 * scale, 1100 * scale, 800 * scale);
+      x.globalAlpha *= .55; x.drawImage(this.nebula, -580 * scale + Math.sin(this.time * .06) * 15, -430 * scale, 1150 * scale, 860 * scale); x.restore();
+      x.globalCompositeOperation = 'screen';
+      for (let i = 0; i < 32; i++) {
+        const a = i * 2.39996, r = Math.sqrt(i / 32) * Math.min(this.w * .34, this.h * .36), px = c.x + Math.cos(a) * r, py = c.y + Math.sin(a) * r * .72;
+        const size = 8 + (i % 5) * 4, pulse = .35 + .2 * Math.sin(this.time * .6 + i);
+        x.save(); x.globalAlpha *= pulse; x.drawImage(i % 3 ? this.blueGlow : this.purpleGlow, px - size, py - size, size * 2, size * 2); x.restore();
+      }
+    }
+    drawSystem() {
+      const x = this.ctx, c = this.center(), base = Math.min(this.w <= 760 ? this.w * .46 : this.w * .29, this.h * .58), p = this.smoothPointer;
+      c.x += p.x * 9; c.y += p.y * 6;
+      const rotation = -.24 + this.rotation * .4, cr = Math.cos(rotation), sr = Math.sin(rotation), project = (px, py) => ({ x: c.x + px * cr - py * sr, y: c.y + px * sr + py * cr });
+      this.hitTargets = [];
+      const positions = this.planets.map((planet, i) => {
+        const orbit = base * (.29 + i / Math.max(4, this.planets.length) * .78), angle = planet.phase + this.time * .16 / Math.pow(1 + i, 1.25);
+        x.save(); x.translate(c.x, c.y); x.rotate(rotation); x.beginPath(); x.ellipse(0, 0, orbit, orbit * .58, 0, 0, TAU); x.strokeStyle = 'rgba(134,151,185,.16)'; x.lineWidth = 1; x.stroke(); x.restore();
+        return { planet, ...project(Math.cos(angle) * orbit, Math.sin(angle) * orbit * .58), depth: Math.sin(angle), size: clamp(base * .038, 8, 16) * planet.size };
+      });
+      const paintPlanet = pos => {
+        const { planet, x: px, y: py, size } = pos;
+        x.drawImage(planet.sprite, px - size * 2.13, py - size * 2.13, size * 4.26, size * 4.26);
+        this.hitTargets.push({ ...planet, x: px, y: py, r: Math.max(21, size * (planet.rings ? 1.8 : 1.2)) });
+        if (this.w > 640) { x.font = '10px system-ui, sans-serif'; x.fillStyle = 'rgba(188,200,222,.65)'; x.textAlign = 'center'; x.fillText(planet.name, px, py + size + 20); }
+      };
+      positions.filter(pos => pos.depth < 0).sort((a,b) => a.y-b.y).forEach(paintPlanet);
+      const sun = clamp(base * .079, 18, 35);
+      x.save(); x.globalCompositeOperation = 'screen'; x.drawImage(this.goldGlow, c.x - sun * 5, c.y - sun * 5, sun * 10, sun * 10); x.restore();
+      const g = x.createRadialGradient(c.x - sun * .3, c.y - sun * .3, 0, c.x, c.y, sun); g.addColorStop(0, '#fff9db'); g.addColorStop(.45, '#ffe8a6'); g.addColorStop(.82, '#ffc263'); g.addColorStop(1, '#f78b37'); x.fillStyle = g; x.beginPath(); x.arc(c.x, c.y, sun, 0, TAU); x.fill();
+      this.hitTargets.push({ x: c.x, y: c.y, r: sun * 1.2, name: 'Солярис', description: 'Сердце вашей системы. Эта звезда согревает каждый созданный вами мир.' });
+      positions.filter(pos => pos.depth >= 0).sort((a,b) => a.y-b.y).forEach(paintPlanet);
+    }
+    drawWarp(progress) {
+      const x = this.ctx, c = this.center(), strength = Math.pow(Math.sin(progress * Math.PI), 1.2);
+      if (this.reduced) { x.fillStyle = `rgba(122,151,227,${strength * .14})`; x.fillRect(0, 0, this.w, this.h); return; }
+      x.save(); x.globalCompositeOperation = 'screen';
+      for (const s of this.warpStars) {
+        const travel = (s.distance + progress * 1.8) % 1.3, d = (travel * travel + .01) * Math.max(this.w, this.h), length = strength * s.length * d;
+        const ca = Math.cos(s.angle), sa = Math.sin(s.angle); x.beginPath(); x.moveTo(c.x + ca * d, c.y + sa * d); x.lineTo(c.x + ca * (d + length), c.y + sa * (d + length));
+        x.strokeStyle = `rgba(176,209,255,${strength * clamp(travel, .1, .85)})`; x.lineWidth = .6 + travel * 1.8; x.stroke();
+      }
+      x.globalAlpha = strength * .22; x.drawImage(this.blueGlow, c.x - this.w * .55, c.y - this.w * .55, this.w * 1.1, this.w * 1.1); x.restore();
+    }
+    destroy() {
+      this.dead = true; cancelAnimationFrame(this.raf); if (this.resizeObserver) this.resizeObserver.disconnect(); window.removeEventListener('resize', this._resize);
+      this.canvas.removeEventListener('pointermove', this._move); this.canvas.removeEventListener('pointerdown', this._down); this.canvas.removeEventListener('pointerup', this._up); this.canvas.removeEventListener('pointercancel', this._up); this.canvas.removeEventListener('pointerleave', this._leave);
+      if (this.warpResolve) { this.warpResolve(); this.warpResolve = null; }
+    }
+  }
+  window.CosmosRenderer = CosmosRenderer;
+})();
+</script><script>/* ORBITA — a quiet, entirely procedural Web Audio soundscape. */
+(function () {
+  'use strict';
+
+  const SCENES = {
+    horizon: { notes: [55, 82.4069, 110, 164.8138], cutoff: 850, shimmer: 440 },
+    nebula: { notes: [65.4064, 97.9989, 130.8128, 195.9977], cutoff: 1250, shimmer: 523.251 },
+    system: { notes: [73.4162, 110, 146.8324, 220], cutoff: 1750, shimmer: 587.33 }
+  };
+
+  class CosmosAudio {
+    constructor() {
+      this.enabled = false;
+      this.scene = 'horizon';
+      this.context = null;
+      this._destroyed = false;
+      this._version = 0;
+      this._pads = [];
+      this._nodes = [];
+      this._voices = new Set();
+      this._ambientTimer = null;
+      this._suspendTimer = null;
+      this._lastWarp = -Infinity;
+      this._lastPlanet = -Infinity;
+    }
+
+    async enable() {
+      if (this._destroyed) throw new Error('This soundscape has been closed.');
+      if (!this.context) this._build();
+      const context = this.context;
+      const version = ++this._version;
+      this.enabled = true;
+      clearTimeout(this._suspendTimer);
+      this._suspendTimer = null;
+      try {
+        // Call from a button or keyboard gesture so browsers can authorize audio.
+        await context.resume();
+        if (version !== this._version || this._destroyed || !this.enabled) return;
+        if (context.state !== 'running') throw new Error('Audio playback is unavailable.');
+      } catch (error) {
+        if (version !== this._version || this._destroyed) return;
+        this.enabled = false;
+        throw error;
+      }
+      if (version !== this._version || this._destroyed || !this.enabled) return;
+      this._approach(this._master.gain, 0.48, 0.35);
+      this._scheduleAmbient();
+    }
+
+    disable() {
+      this.enabled = false;
+      ++this._version;
+      clearTimeout(this._ambientTimer);
+      clearTimeout(this._suspendTimer);
+      this._ambientTimer = null;
+      this._suspendTimer = null;
+      if (!this.context || this._destroyed) return;
+      this._approach(this._master.gain, 0, 0.14);
+      const context = this.context;
+      this._suspendTimer = setTimeout(() => {
+        this._suspendTimer = null;
+        if (!this.enabled && !this._destroyed && context.state !== 'closed') {
+          context.suspend().catch(() => {});
+        }
+      }, 850);
+    }
+
+    setScene(scene) {
+      if (!Object.prototype.hasOwnProperty.call(SCENES, scene) || this._destroyed) return;
+      this.scene = scene;
+      if (!this.context) return;
+      const settings = SCENES[scene];
+      this._pads.forEach((pad) => this._approach(pad.osc.frequency, settings.notes[pad.index], 1.5));
+      this._approach(this._filter.frequency, settings.cutoff, 1.7);
+    }
+
+    warp() {
+      if (!this._canPlay()) return;
+      const now = this.context.currentTime;
+      if (now - this._lastWarp < 0.65 || this._voices.size > 18) return;
+      this._lastWarp = now;
+      // Rounded sine sweeps give motion without a loud broadband noise burst.
+      const root = SCENES[this.scene].notes[0];
+      [-0.55, 0.55].forEach((pan, index) => {
+        const osc = this.context.createOscillator();
+        const gain = this.context.createGain();
+        const panner = this._panner(pan);
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(root * (1 + index * 0.005), now);
+        osc.frequency.exponentialRampToValueAtTime(root * 9, now + 0.95);
+        osc.frequency.exponentialRampToValueAtTime(root * 4, now + 2.2);
+        gain.gain.setValueAtTime(0, now);
+        gain.gain.linearRampToValueAtTime(0.055, now + 0.65);
+        gain.gain.exponentialRampToValueAtTime(0.0001, now + 2.3);
+        gain.gain.linearRampToValueAtTime(0, now + 2.4);
+        osc.connect(gain).connect(panner).connect(this._effects);
+        this._track(osc, [gain, panner]);
+        osc.start(now);
+        osc.stop(now + 2.45);
+      });
+      this._tone(root * 8, 0.02, 2.8, 0, 0.85);
+    }
+
+    planet() {
+      if (!this._canPlay()) return;
+      const now = this.context.currentTime;
+      if (now - this._lastPlanet < 0.18) return;
+      this._lastPlanet = now;
+      const root = SCENES[this.scene].shimmer;
+      this._tone(root, 0.052, 2.2, -0.22);
+      this._tone(root * 1.5, 0.027, 2.8, 0.28, 0.1);
+      this._tone(root * 2, 0.012, 2.1, 0.05, 0.2);
+    }
+
+    destroy() {
+      if (this._destroyed) return;
+      this.enabled = false;
+      this._destroyed = true;
+      ++this._version;
+      clearTimeout(this._ambientTimer);
+      clearTimeout(this._suspendTimer);
+      this._ambientTimer = this._suspendTimer = null;
+      this._pads.forEach(({ osc }) => {
+        try { osc.stop(); } catch (_) { /* Already stopped. */ }
+      });
+      if (this._breath) {
+        try { this._breath.stop(); } catch (_) { /* Already stopped. */ }
+      }
+      Array.from(this._voices).forEach((voice) => {
+        try { voice.source.stop(); } catch (_) { /* Already ended. */ }
+        voice.cleanup();
+      });
+      this._nodes.forEach((node) => { try { node.disconnect(); } catch (_) {} });
+      this._nodes = [];
+      this._pads = [];
+      if (this.context && this.context.state !== 'closed') this.context.close().catch(() => {});
+      this.context = null;
+    }
+
+    _build() {
+      const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+      if (!AudioContextClass) throw new Error('This browser does not support Web Audio.');
+      const context = new AudioContextClass({ latencyHint: 'playback' });
+      this.context = context;
+      try {
+        this._master = context.createGain();
+        this._master.gain.value = 0;
+        this._master.connect(context.destination);
+        this._effects = context.createGain();
+        this._effects.gain.value = 0.8;
+        this._effects.connect(this._master);
+        this._filter = context.createBiquadFilter();
+        this._filter.type = 'lowpass';
+        this._filter.Q.value = 0.35;
+        this._filter.frequency.value = SCENES[this.scene].cutoff;
+        const breathingGain = context.createGain();
+        breathingGain.gain.value = 0.8;
+        this._filter.connect(breathingGain).connect(this._master);
+        this._breath = context.createOscillator();
+        this._breath.frequency.value = 0.065;
+        const breathDepth = context.createGain();
+        breathDepth.gain.value = 0.12;
+        this._breath.connect(breathDepth).connect(breathingGain.gain);
+        this._breath.start();
+        this._nodes.push(this._master, this._effects, this._filter, breathingGain, this._breath, breathDepth);
+        SCENES[this.scene].notes.forEach((frequency, index) => {
+          [-1, 1].forEach((side) => {
+            const osc = context.createOscillator();
+            osc.type = index === 2 ? 'triangle' : 'sine';
+            osc.frequency.value = frequency;
+            osc.detune.value = side * (1.2 + index * 0.45);
+            const gain = context.createGain();
+            gain.gain.value = [0.031, 0.018, 0.011, 0.008][index];
+            const panner = this._panner(side * (0.32 + index * 0.12));
+            osc.connect(gain).connect(panner).connect(this._filter);
+            osc.start();
+            this._pads.push({ osc, index });
+            this._nodes.push(osc, gain, panner);
+          });
+        });
+      } catch (error) {
+        this._nodes.forEach((node) => { try { node.disconnect(); } catch (_) {} });
+        this._nodes = [];
+        this._pads = [];
+        context.close().catch(() => {});
+        this.context = null;
+        throw error;
+      }
+    }
+
+    _panner(position) {
+      if (typeof this.context.createStereoPanner !== 'function') return this.context.createGain();
+      const panner = this.context.createStereoPanner();
+      panner.pan.value = position;
+      return panner;
+    }
+
+    _approach(parameter, value, timeConstant) {
+      const now = this.context.currentTime;
+      if (typeof parameter.cancelAndHoldAtTime === 'function') parameter.cancelAndHoldAtTime(now);
+      else {
+        const current = parameter.value;
+        parameter.cancelScheduledValues(now);
+        parameter.setValueAtTime(current, now);
+      }
+      parameter.setTargetAtTime(value, now, timeConstant);
+    }
+
+    _canPlay() {
+      return this.enabled && !this._destroyed && this.context && this.context.state === 'running';
+    }
+
+    _tone(frequency, volume, duration, pan, delay = 0) {
+      if (!this._canPlay() || this._voices.size >= 24) return;
+      const start = this.context.currentTime + delay;
+      const source = this.context.createOscillator();
+      const envelope = this.context.createGain();
+      const panner = this._panner(pan);
+      source.type = 'sine';
+      source.frequency.value = frequency;
+      envelope.gain.setValueAtTime(0, start);
+      envelope.gain.linearRampToValueAtTime(volume, start + 0.045);
+      envelope.gain.exponentialRampToValueAtTime(0.0001, start + duration);
+      envelope.gain.linearRampToValueAtTime(0, start + duration + 0.08);
+      source.connect(envelope).connect(panner).connect(this._effects);
+      this._track(source, [envelope, panner]);
+      source.start(start);
+      source.stop(start + duration + 0.12);
+    }
+
+    _track(source, nodes) {
+      const voice = { source, cleanup: null };
+      voice.cleanup = () => {
+        source.onended = null;
+        [source, ...nodes].forEach((node) => { try { node.disconnect(); } catch (_) {} });
+        this._voices.delete(voice);
+      };
+      this._voices.add(voice);
+      source.onended = voice.cleanup;
+    }
+
+    _scheduleAmbient() {
+      clearTimeout(this._ambientTimer);
+      if (!this.enabled || this._destroyed) return;
+      this._ambientTimer = setTimeout(() => {
+        this._ambientTimer = null;
+        if (this._canPlay()) {
+          const interval = [1, 1.5, 2][Math.floor(Math.random() * 3)];
+          this._tone(SCENES[this.scene].shimmer * interval, 0.015, 3.5, Math.random() * 1.2 - 0.6);
+        }
+        this._scheduleAmbient();
+      }, 11000 + Math.random() * 10000);
+    }
+  }
+
+  window.CosmosAudio = CosmosAudio;
+})();
+</script><script>(() => {
+  'use strict';
+  const $ = (s) => document.querySelector(s);
+  const $$ = (s) => [...document.querySelectorAll(s)];
+  const scenes = {
+    horizon: { number:'01', title:'На краю<br><span>бесконечности.</span>', description:'Здесь заканчивается привычный мир.<br>И начинается твоя вселенная.', label:'SINGULARITY — 001', sub:'ЗА ГРАНИЦЕЙ ИЗВЕСТНОГО', note:'Потяни за звёзды — измени ракурс', sound:'Глубокий гул сингулярности' },
+    nebula: { number:'02', title:'Там, где<br><span>рождается свет.</span>', description:'У каждого далёкого солнца было начало.<br>Побудь внутри этого мгновения.', label:'NEBULA — 002', sub:'КОЛЫБЕЛЬ НОВЫХ СОЛНЦ', note:'Двигайся сквозь облака звёздной пыли', sound:'Нежное дыхание туманности' },
+    system: { number:'03', title:'Вселенная.<br><span>Твоего авторства.</span>', description:'Придумай имя. Выбери цвет.<br>Где-то в бесконечности появится твой мир.', label:'GENESIS — 003', sub:'ЗДЕСЬ ЕСТЬ МЕСТО ТВОЕМУ МИРУ', note:'Нажми на планету, чтобы познакомиться', sound:'Мелодия твоей звёздной системы' }
+  };
+  let scene='horizon', paused=false, traveling=false, toastTimer, audioBusy=false;
+  let reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let planets=[];
+  try {const saved=JSON.parse(localStorage.getItem('orbita.planets.v1') || '[]'); if(Array.isArray(saved)) planets=saved.filter(p=>p && typeof p.name==='string' && p.name.length<=28 && /^#[0-9a-f]{6}$/i.test(p.color) && Number.isFinite(p.size) && p.size>=.5 && p.size<=2 && typeof p.rings==='boolean').slice(0,12);} catch(_) {}
+  const visited=new Set(['horizon']);
+  const canvas=$('#cosmos');
+  const renderer=new CosmosRenderer(canvas, {onObjectClick: object=>toast(`${object.name} · ${object.description}`)});
+  const audio=new CosmosAudio();
+  renderer.setReducedMotion(reduced);
+  planets.forEach(p=>renderer.createPlanet(p));
+  const missionStart=Date.now();
+  const clockTimer=setInterval(()=>{
+    const t=Math.floor((Date.now()-missionStart)/1000);$('#mission-clock').textContent=[Math.floor(t/3600),Math.floor(t/60)%60,t%60].map(n=>String(n).padStart(2,'0')).join(':');
+  },1000);
+  function toast(message){clearTimeout(toastTimer);$('#toast').textContent=message;$('#toast').classList.add('show');toastTimer=setTimeout(()=>$('#toast').classList.remove('show'),4200);}
+  function setScene(next, announce=true){
+    if(!scenes[next]) return;
+    scene=next; const data=scenes[next];renderer.setScene(next);audio.setScene(next);visited.add(next);$('#world-list').hidden=next!=='system';
+    $('#scene-number').textContent=data.number;$('#scene-title').innerHTML=data.title;$('#scene-description').innerHTML=data.description;$('#object-label').firstChild.textContent=data.label;$('#object-subtitle').textContent=data.sub;$('#flight-note').textContent=data.note;
+    $$('.destination').forEach(b=>{const active=b.dataset.scene===next;b.classList.toggle('active',active);b.setAttribute('aria-pressed',String(active));});
+    $('#discovered').textContent=`ИССЛЕДОВАНО ${String(visited.size).padStart(2,'0')} / 03`;
+    if(announce && visited.size===3 && !sessionStorageSafeGet('orbita.explored')){toast('Ты открыл все три уголка космоса. Теперь создай свой.');try{sessionStorage.setItem('orbita.explored','1');}catch(_){}}
+  }
+  function sessionStorageSafeGet(key){try{return sessionStorage.getItem(key);}catch(_){return null;}}
+  $$('.destination').forEach(button=>button.addEventListener('click',()=>{if(!traveling)setScene(button.dataset.scene);}));
+  $('.brand').addEventListener('click',event=>{event.preventDefault();if(!traveling)setScene('horizon');});
+  function setPaused(value){paused=value;renderer.setPaused(paused);$('#pause').setAttribute('aria-pressed',String(paused));$('#pause').setAttribute('aria-label',paused?'Продолжить движение':'Приостановить движение');$('#pause').title=paused?'Продолжить · P':'Пауза · P';$('#pause use').setAttribute('href',paused?'#i-play':'#i-pause');}
+  $('#pause').addEventListener('click',()=>{if(!traveling)setPaused(!paused);});
+  $('#speed').addEventListener('input',event=>{const value=Number(event.target.value);renderer.setSpeed(value);$('#speed-value').textContent=value.toFixed(1);});
+  async function toggleSound(){
+    if(audioBusy)return;audioBusy=true;
+    try{if(audio.enabled){audio.disable();}else{await audio.enable();audio.setScene(scene);toast(scenes[scene].sound+' · лучше в наушниках');}
+      $('#sound').setAttribute('aria-pressed',String(audio.enabled));$('#sound').setAttribute('aria-label',audio.enabled?'Выключить звук':'Включить звук');$('#sound').title=audio.enabled?'Выключить звук · M':'Включить звук · M';$('#sound use').setAttribute('href',audio.enabled?'#i-sound':'#i-mute');
+    }catch(_){toast('Браузер не смог включить звук. Космос всё равно с тобой.');}finally{audioBusy=false;}
+  }
+  $('#sound').addEventListener('click',toggleSound);
+  async function warp(){
+    if(traveling)return;traveling=true;
+    document.body.classList.add('traveling');$('#warp').disabled=true;$('#create').disabled=true;$('#pause').disabled=true;$$('.destination').forEach(b=>b.disabled=true);
+    const keys=Object.keys(scenes),next=keys[(keys.indexOf(scene)+1)%keys.length];
+    audio.warp();
+    try{await renderer.warp();setScene(next);}catch(_){setScene(next);}finally{document.body.classList.remove('traveling');$('#warp').disabled=false;$('#create').disabled=false;$('#pause').disabled=false;$$('.destination').forEach(b=>b.disabled=false);traveling=false;}
+  }
+  $('#warp').addEventListener('click',warp);
+  const planetDialog=$('#planet-dialog');const helpDialog=$('#help-dialog');
+  function openPlanet(){if(traveling)return;if(planets.length>=12){toast('В твоей системе уже 12 авторских планет — целая коллекция миров.');return;}if(helpDialog.open)helpDialog.close();planetDialog.showModal();$('#planet-name').focus();}
+  $('#create').addEventListener('click',openPlanet);
+  $('#help').addEventListener('click',()=>helpDialog.showModal());
+  $('#world-list').addEventListener('click',()=>{
+    const content=$('#world-content');content.replaceChildren();
+    renderer.planets.forEach(planet=>{const article=document.createElement('article'),heading=document.createElement('h3'),description=document.createElement('p');heading.textContent=planet.name;heading.style.color=planet.color;description.textContent=planet.description;article.append(heading,description);content.append(article);});
+    $('#world-dialog').showModal();
+  });
+  $$('[data-close]').forEach(button=>button.addEventListener('click',()=>button.closest('dialog').close()));
+  $$('dialog').forEach(dialog=>dialog.addEventListener('click',event=>{if(event.target!==dialog)return;const r=dialog.getBoundingClientRect();if(event.clientX<r.left||event.clientX>r.right||event.clientY<r.top||event.clientY>r.bottom)dialog.close();}));
+  function updatePlanetPreview(){
+    const color=$('input[name=color]:checked').value;const size=Number($('#planet-size').value), rings=$('#planet-rings').checked;
+    $('#preview-planet').style.background=`radial-gradient(circle at 28% 24%, #eee8ff, ${color} 20%, ${color}99 43%, #171124 70%, #090611 85%)`;
+    $('#preview-planet').style.transform=`scale(${.65+size*.35})`;$('#preview-rings').style.transform=`rotate(-24deg) scale(${.65+size*.35})`;$('#preview-rings').style.display=rings?'block':'none';$('#size-output').textContent=size.toFixed(1)+' ×';
+  }
+  $('#planet-form').addEventListener('input',updatePlanetPreview);
+  $('#planet-form').addEventListener('submit',event=>{
+    event.preventDefault();const name=$('#planet-name').value.trim();if(!name){$('#planet-name').setCustomValidity('Дай своему миру имя.');$('#planet-name').reportValidity();return;}
+    if(planets.length>=12)return;
+    const planet={name,color:$('input[name=color]:checked').value,size:Number($('#planet-size').value),rings:$('#planet-rings').checked};
+    planets.push(planet);renderer.createPlanet(planet);let persisted=true;try{localStorage.setItem('orbita.planets.v1',JSON.stringify(planets));}catch(_){persisted=false;}
+    planetDialog.close();setScene('system',false);audio.planet();toast(`Планета «${name}» появилась во вселенной.${persisted?' Она будет ждать тебя здесь.':' Браузер не разрешил сохранить её после закрытия.'}`);
+    $('#planet-name').value='';$('#planet-limit').textContent=`Твоих планет: ${planets.length} / 12. Сохраняются в этом браузере.`;
+  });
+  $('#planet-name').addEventListener('input',()=>$('#planet-name').setCustomValidity(''));
+  if(planets.length)$('#planet-limit').textContent=`Твоих планет: ${planets.length} / 12. Сохраняются в этом браузере.`;
+  function updateReduced(){renderer.setReducedMotion(reduced);document.body.classList.toggle('reduced',reduced);$('#reduce-motion').setAttribute('aria-pressed',String(reduced));$('#reduce-motion').textContent=reduced?'Вернуть обычное движение':'Уменьшить движение';}
+  $('#reduce-motion').addEventListener('click',()=>{reduced=!reduced;updateReduced();});updateReduced();
+  $('#fullscreen').addEventListener('click',async()=>{try{if(document.fullscreenElement)await document.exitFullscreen();else if(document.documentElement.requestFullscreen)await document.documentElement.requestFullscreen();else toast('Этот браузер не поддерживает полноэкранный режим.');}catch(_){toast('Полноэкранный режим недоступен в этом окне.');}});
+  $('#capture').addEventListener('click',()=>{
+    try{
+      const card=document.createElement('canvas');card.width=canvas.width;card.height=canvas.height;const c=card.getContext('2d');c.fillStyle='#070811';c.fillRect(0,0,card.width,card.height);c.drawImage(canvas,0,0);const scale=card.width/1200;
+      const g=c.createLinearGradient(0,card.height*.68,0,card.height);g.addColorStop(0,'transparent');g.addColorStop(1,'#070811d9');c.fillStyle=g;c.fillRect(0,0,card.width,card.height);
+      c.fillStyle='#e6dafa';c.font=`${Math.round(24*scale)}px Segoe UI, sans-serif`;c.fillText('О Р Б И Т А',45*scale,card.height-60*scale);c.fillStyle='#b6a7c9';c.font=`${Math.round(13*scale)}px Segoe UI, sans-serif`;c.fillText(scenes[scene].label+'   /   ТВОЯ МАЛЕНЬКАЯ БЕСКОНЕЧНОСТЬ',45*scale,card.height-34*scale);
+      card.toBlob(blob=>{if(!blob){toast('Не удалось сохранить открытку.');return;}const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=`orbita-${scene}.png`;a.click();setTimeout(()=>URL.revokeObjectURL(url),30000);toast('Космическая открытка готова к сохранению.');},'image/png');
+    }catch(_){toast('Браузер не разрешил сохранить изображение.');}
+  });
+  document.addEventListener('keydown',event=>{
+    if(event.ctrlKey||event.metaKey||event.altKey||event.repeat||event.target.closest('input,textarea,select')||document.querySelector('dialog[open]'))return;
+    const key=event.key.toLowerCase();if(key==='h'||key==='р'){event.preventDefault();warp();}else if(key==='p'||key==='з'){if(!traveling)setPaused(!paused);}else if(key==='m'||key==='ь')toggleSound();else if(['1','2','3'].includes(key)&&!traveling)setScene(Object.keys(scenes)[Number(key)-1]);
+  });
+  document.addEventListener('visibilitychange',()=>{renderer.setPaused(document.hidden||paused);if(document.hidden&&audio.enabled){audio.disable();$('#sound').setAttribute('aria-pressed','false');$('#sound').setAttribute('aria-label','Включить звук');$('#sound').title='Включить звук · M';$('#sound use').setAttribute('href','#i-mute');}});
+  window.addEventListener('pagehide',()=>{audio.disable();});
+  updatePlanetPreview();
+})();
+</script>
+</body>
+</html>
+
+
